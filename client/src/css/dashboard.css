@@ -1,0 +1,101 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+
+.dashboard {
+  display: flex;
+  height: 100vh;
+  background-color: #111827;
+  color: white;
+}
+
+
+.sidebar {
+  width: 220px;
+  background-color: #1f2937;
+  padding: 20px;
+}
+
+.logo {
+  margin-bottom: 30px;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+}
+
+.menu a {
+  text-decoration: none;
+  color: white;
+ 
+}
+
+.menu-item {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.menu-item:hover {
+  background-color: #374151;
+}
+.menu-item:hover a {
+  color: white;
+}
+
+/* .menu-item.active {
+  background-color: #2563eb;
+} */
+
+
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile button {
+  background-color: #c40202;
+  padding: 6px 8px;
+  border-radius: 6px;
+  color: white;
+  font-weight: 700;
+}
+
+
+
+
+.welcome-box {
+  margin-top: 40px;
+  background-color: #1f2937;
+  padding: 50px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.welcome-box h2 {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.welcome-box p {
+  color: #9ca3af;
+}
+
+
+.status.active {
+  color: #22c55e;
+}
+
+.status.inactive {
+  color: #ef4444;
+}

@@ -1,0 +1,81 @@
+/* Container center */
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #111827; /* dashboard bg */
+}
+
+/* Form Box */
+.form-box {
+    width: 370px;
+    padding: 25px;
+    border-radius: 12px;
+    background-color: #1f2937; /* card color */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+/* Heading */
+.form-box h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #ffffff;
+    font-size: medium;
+}
+
+/* Input Group */
+.input-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Labels */
+.input-group label {
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #9ca3af; /* light gray */
+}
+
+/* Inputs */
+.input-group input,
+.input-group select {
+    padding: 10px;
+    border: 1px solid #374151;
+    outline: none;
+    border-radius: 8px;
+    background-color: #111827;
+    color: white;
+    font-size: 14px;
+}
+
+/* Placeholder */
+.input-group input::placeholder {
+    color: #6b7280;
+}
+
+/* Focus */
+.input-group input:focus,
+.input-group select:focus {
+    border-color: #2563eb;
+}
+
+/* Button */
+.btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #2563eb; /* blue */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: #1d4ed8;
+}
