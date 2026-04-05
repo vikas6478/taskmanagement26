@@ -15,10 +15,12 @@ const Dashboard = () => {
       
       
       <div className="sidebar">
-        <h2 className="logo">MyApp</h2>
+         <h2 className="logo"><img src="tasklogoimg.png" alt="Taskmanagement" /></h2>
         <ul className="menu">
-          <li className="menu-item active">Dashboard</li>
+          <li className="menu-item active">Admin-Dashboard</li>
         <li className="menu-item"><Link to="createuser" >Create User</Link></li> 
+        <li className="menu-item"><Link to="assigntask" >Assign Task</Link></li> 
+        <li className="menu-item"><Link to="showreport" >Show Report</Link></li> 
           <li className="menu-item">Reports</li>
           <li className="menu-item">Settings</li>
         </ul>
@@ -28,9 +30,10 @@ const Dashboard = () => {
      <div className="main">
 
   <div className="header">
-    <h1>Dashboard</h1>
-    <div className="profile"><button onClick={logout}>Logout</button></div>
+    <h1>ADMIN DASHBOARD</h1>
+    <div className="profile">{localStorage.getItem("adminname")} | <button onClick={logout}>Logout</button></div>
   </div>
+  <hr />
 
     <Outlet />
 

@@ -26,7 +26,7 @@ const CreateUser = () => {
     }
     return (
         <>
-            <div className="user-container">
+            <div className="user-container"> 
   <form className="user-form-box">
     <h1>USER CREATE FORM</h1>
 

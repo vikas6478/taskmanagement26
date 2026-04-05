@@ -1,5 +1,6 @@
 const AdminModel = require("../models/adminModel");
 const UserModel = require("../models/userModel");
+const TaskModel = require("../models/userTask")
 const RandomPass = require("../middleware/randonPassword");
 const nodemailer = require("nodemailer");
 
@@ -67,7 +68,30 @@ Team`,
   res.send({ msg: "Email successfully sent!!" });
 };
 
+const getUserData = async(req,res)=>{
+  const User = await UserModel.find()
+  res.status(200).send(User)
+}
+
+const assignTask = async (req, res) => {
+  const { userid,usertask, days, } = req.body;
+  const task = await TaskModel.create({
+        usertask:usertask,
+        days:days,
+        userid:userid
+  })
+    res.send({msg:"okkkkk"});
+}
+
+const getTaskReport=async(req, res) =>{
+     const task = await TaskModel.find().populate("userid");
+     res.send(task);
+}
+
 module.exports = {
   userLogin,
   CreateUser,
+  getUserData,
+  assignTask,
+  getTaskReport
 };

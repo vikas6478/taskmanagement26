@@ -4,6 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const adminRoute =require("./routes/adminRoute");
+const userRoute =require("./routes/userRoute");
 
 app.use(bodyParser.urlencoded())
 app.use(bodyParser.json())
@@ -15,6 +16,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/taskmanagement26").then(() => {
 })
 
 app.use("/admin", adminRoute)
+app.use("/user", userRoute)
 
 
 app.listen(8000, () => {

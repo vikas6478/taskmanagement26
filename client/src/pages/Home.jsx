@@ -16,6 +16,7 @@ const Home = () => {
             let api = "http://localhost:8000/admin/userlogin"
             const response = await axios.post(api,{email,password})
             localStorage.setItem("admin",response.data.admin.email)
+            localStorage.setItem("adminname",response.data.admin.name)
             alert(response.data.msg)
             navigate("/admindashboard")
             console.log(response)
@@ -24,8 +25,13 @@ const Home = () => {
              
             let api = "http://localhost:8000/user/userlogin" 
             const response = await axios.post(api,{email,password})
-            alert(response.data.msg)
+            localStorage.setItem("username", response.data.user.name);
+            localStorage.setItem("useremail", response.data.user.email);
+            localStorage.setItem("userid", response.data.user._id);
             console.log(response)
+            alert(response.data.msg)
+        navigate("/userdashboard");
+
         }
     }
     return (
@@ -53,7 +59,7 @@ const Home = () => {
                         </select>
                     </div>
 
-                    <button className="btn" onClick={handleSubmit}>Submit</button>
+                    <button className="login-btn" onClick={handleSubmit}>Submit</button>
                 </form>
             </div>
 
