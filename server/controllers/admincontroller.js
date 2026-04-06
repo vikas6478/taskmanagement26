@@ -19,7 +19,7 @@ const userLogin = async (req, res) => {
 };
 
 const CreateUser = async (req, res) => {
-   try {
+  
   const { name, email, post } = req.body;
   const UserPassword = RandomPass.randomPassword();
   const mailTransporter = nodemailer.createTransport({
