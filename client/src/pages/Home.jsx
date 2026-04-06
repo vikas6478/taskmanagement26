@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import "../css/home.css"
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Home = () => {
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
@@ -17,8 +19,10 @@ const Home = () => {
             const response = await axios.post(api,{email,password})
             localStorage.setItem("admin",response.data.admin.email)
             localStorage.setItem("adminname",response.data.admin.name)
-            alert(response.data.msg)
+            toast.success(response.data.msg)
+            setTimeout(()=>{
             navigate("/admindashboard")
+            },1000)
             console.log(response)
 
         }else{
@@ -29,14 +33,17 @@ const Home = () => {
             localStorage.setItem("useremail", response.data.user.email);
             localStorage.setItem("userid", response.data.user._id);
             console.log(response)
-            alert(response.data.msg)
+            toast.success(response.data.msg)
+            setTimeout(() => {
         navigate("/userdashboard");
+                
+            }, 1000);
 
         }
     }
     return (
         <>
-            <div className="container">
+            <div className="container1">
                 <form className="form-box">
                     <h1>LOGIN FORM</h1>
 
@@ -62,7 +69,7 @@ const Home = () => {
                     <button className="login-btn" onClick={handleSubmit}>Submit</button>
                 </form>
             </div>
-
+            <ToastContainer theme="dark" />
         </>
     )
 }

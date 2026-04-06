@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 import "../css/createuser.css"
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const CreateUser = () => {
     const [input,setInput] = useState({})
 
@@ -19,7 +23,7 @@ const CreateUser = () => {
 
             let api = "http://localhost:8000/admin/createuser"
             const response = await axios.post(api,input)
-            alert(response.data.msg)
+             toast.success(response.data.msg) 
             // navigate("/admindashboard")
             console.log(response)
 
@@ -56,6 +60,8 @@ const CreateUser = () => {
     <button className="user-btn" onClick={handleSubmit}>Submit</button>
   </form>
 </div>
+
+<ToastContainer  theme="dark"/>
 
         </>
     )

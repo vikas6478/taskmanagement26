@@ -5,7 +5,7 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
-
+import "../css/assigntask.css"
 const UserTask = () => {
     const [mydata, setMydata] = useState([]);
     const [show, setShow] = useState(false);
@@ -34,6 +34,10 @@ const UserTask = () => {
           let api = "http://localhost:8000/user/settaskstatus";
           const response = await axios.post(api, {taskID, taskStatus, compDay})
          console.log(response.data);    
+         if(response){
+            alert("Ok")
+         }
+         
   }
 
 
@@ -71,14 +75,14 @@ const UserTask = () => {
                 </tbody>
             </Table>
             <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
+                <Modal.Header closeButton className="dark-modal">
                     <Modal.Title>Send Report</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body className="bg-dark text-white">
                     <Form>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                            <Form.Label>Select Task Status</Form.Label>
-                           <Form.Select aria-label="Default select example" onChange={(e)=>{setTaskStatus(e.target.value)}}>
+                           <Form.Select aria-label="Default select example" onChange={(e)=>{setTaskStatus(e.target.value)}} className="bg-dark text-white">
                          <option>Open this select menu</option>
                          <option value="Fully Completed">Fully Completed</option>
                          <option value="Partial Completed">Partial Completed</option>
@@ -88,7 +92,7 @@ const UserTask = () => {
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Enter Completion days</Form.Label>
-                            <Form.Control type="text" onChange={(e)=>{setCompDay(e.target.value)}}/>
+                            <Form.Control type="text" onChange={(e)=>{setCompDay(e.target.value)}} className="bg-dark text-white"/>
                         </Form.Group>
                         <Button variant="primary" type="submit" onClick={handleSubmitTask}>
                             Submit
@@ -97,7 +101,7 @@ const UserTask = () => {
 
 
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer className="bg-dark text-white">
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>

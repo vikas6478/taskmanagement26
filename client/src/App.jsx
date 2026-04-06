@@ -11,6 +11,7 @@ import Assigntask from './admin/Assigntask'
 import UserDashboard from './user/UserDashboard'
 import UserTask from './user/userTask'
 import ShowReport from './admin/ShowReport'
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   return (
@@ -47,6 +48,7 @@ const App = () => {
      </Routes>
       </BrowserRouter>
    
+   <ToastContainer theme="dark" />
    </>
   )
 }

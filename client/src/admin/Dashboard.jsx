@@ -1,13 +1,17 @@
 import React from "react";
 import "../css/dashboard.css";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Dashboard = () => {
   const navigate = useNavigate();
 
   const logout = ()=>{
     localStorage.clear();
+    toast.success("you are succesfully logout!") 
+    setTimeout(()=>{ 
     navigate("/home")
+    },1000)
   }
   return (
     <>
@@ -49,6 +53,7 @@ const Dashboard = () => {
 </div>
 
     </div>
+    <ToastContainer theme="dark" />
     </>
   );
 };
