@@ -26,8 +26,9 @@ const ShowReport = () => {
             <>
                 <tr>
                     <td>{sno}</td>
-                    <td>{key.userid.name}</td>
-                    <td>{key.userid.email}</td>
+                    
+                    <td>{key.userid?.name || "Deleted User"}</td>
+                    <td>{key.userid?.email || "N/A"}</td>
                     <td>{key.usertask}</td>
                     <td>{key.days}</td>
                     <td>{key.taskstatus}</td>
