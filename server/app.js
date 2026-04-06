@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 const adminRoute =require("./routes/adminRoute");
 const userRoute =require("./routes/userRoute");
 require("dotenv").config();
@@ -10,8 +10,9 @@ require("dotenv").config();
 const PORT = process.env.PORT;
 const MONGO_URL = process.env.MONGO_URL;
 
-app.use(bodyParser.urlencoded())
-app.use(bodyParser.json())
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 
 app.use(cors());
 
