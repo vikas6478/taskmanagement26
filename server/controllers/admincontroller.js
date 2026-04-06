@@ -19,6 +19,7 @@ const userLogin = async (req, res) => {
 };
 
 const CreateUser = async (req, res) => {
+   try {
   const { name, email, post } = req.body;
   const UserPassword = RandomPass.randomPassword();
   const mailTransporter = nodemailer.createTransport({
@@ -53,19 +54,31 @@ Team`,
     password: UserPassword,
   });
 
-  mailTransporter.sendMail(
-    mailDetails,
+  // mailTransporter.sendMail(
+  //   mailDetails,
 
-    function (err, data) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Email sent");
-      }
-    },
-  );
+  //   function (err, data) {
+  //     if (err) {
+  //       console.log(err,"gfyftuyjyjrdthdrxt");
+  //     } else {
+  //       console.log("Email sent");
+  //     }
+  //   },
+  // );
 
-  res.send({ msg: "Email successfully sent!!" });
+  // res.send({ msg: "Email successfully sent!!" });
+
+     // Wait for email to be sent
+    await mailTransporter.sendMail(mailDetails);
+    console.log("Email sent successfully");
+
+    // Only after email is sent, respond to frontend
+    res.status(200).send({ msg: "User created & Email sent!!" });
+
+  } catch (err) {
+    console.error("CreateUser Error:", err);
+    res.status(500).send({ msg: "Email failed to send or something went wrong" });
+  }
 
 };
 
