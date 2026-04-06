@@ -22,7 +22,7 @@ const CreateUser = () => {
     const handleSubmit =async(e)=>{
         e.preventDefault()
 
-            let api = `${API}/admin/createuser`
+            let api = `${API}/admin/createuser`;
             const response = await axios.post(api,input)
              toast.success(response.data.msg) 
             // navigate("/admindashboard")

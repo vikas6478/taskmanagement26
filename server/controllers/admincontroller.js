@@ -24,13 +24,13 @@ const CreateUser = async (req, res) => {
   const mailTransporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "vikasraghuvanshi64@gmail.com",
-      pass: "obug leie oiwt ozgs",
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
     },
   });
 
   const mailDetails = {
-    from: "vikasraghuvanshi64@gmail.com",
+    from: process.env.EMAIL_USER,
     to: email,
     subject: "User Login Details!",
     text: `Hello ${name},
