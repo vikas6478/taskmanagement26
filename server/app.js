@@ -14,7 +14,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-app.use(cors());
+// ✅ CORS (FINAL FIX)
+app.use(cors({
+  origin: "*",
+}));
+
+// ✅ Preflight fix (VERY IMPORTANT)
+app.options("*", cors());
 
 mongoose.connect(MONGO_URL).then(() => {
     console.log("mongodb is successfully connected!!")
