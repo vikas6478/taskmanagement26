@@ -53,20 +53,32 @@ Team`,
     password: UserPassword,
   });
 
-  mailTransporter.sendMail(
-    mailDetails,
+  // mailTransporter.sendMail(
+  //   mailDetails,
 
-    function (err, data) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Email sent");
-      }
-    },
-  );
+  //   function (err, data) {
+  //     if (err) {
+  //       console.log(err);
+  //     } else {
+  //       console.log("Email sent");
+  //     }
+  //   },
+  // );
 
-  res.send({ msg: "Email successfully sent!!" });
+  // res.send({ msg: "Email successfully sent!!" });
+
+  mailTransporter.sendMail(mailDetails, function (err, data) {
+  if (err) {
+    console.log("Email error:", err);
+    return res.status(500).send({ msg: "Email failed to send" });
+  } else {
+    console.log("Email sent successfully");
+    return res.status(200).send({ msg: "User created & Email sent!!" });
+  }
+});
 };
+
+
 
 const getUserData = async(req,res)=>{
   const User = await UserModel.find()
