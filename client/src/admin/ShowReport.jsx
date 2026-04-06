@@ -2,13 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Table from 'react-bootstrap/Table';
 import "../css/dashboard.css"
+const API = import.meta.env.VITE_API_URL;
 
 const ShowReport = () => {
     const [mydata, setMydata] = useState([]);
 
 
     const loadData = async () => {
-        let api = "http://localhost:8000/admin/gettaskreport";
+        let api = `${API}/admin/gettaskreport`;
         const response = await axios.get(api);
         console.log(response.data);
         setMydata(response.data);

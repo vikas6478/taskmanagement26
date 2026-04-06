@@ -4,6 +4,9 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+const API = import.meta.env.VITE_API_URL;
+
 const Home = () => {
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
@@ -15,7 +18,7 @@ const Home = () => {
 
         if(usertype=="admin"){
 
-            let api = "http://localhost:8000/admin/userlogin"
+            let api = `${API}/admin/userlogin`
             const response = await axios.post(api,{email,password})
             localStorage.setItem("admin",response.data.admin.email)
             localStorage.setItem("adminname",response.data.admin.name)
@@ -27,7 +30,7 @@ const Home = () => {
 
         }else{
              
-            let api = "http://localhost:8000/user/userlogin" 
+            let api = `${API}/user/userlogin`
             const response = await axios.post(api,{email,password})
             localStorage.setItem("username", response.data.user.name);
             localStorage.setItem("useremail", response.data.user.email);

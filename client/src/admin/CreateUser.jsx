@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+const API = import.meta.env.VITE_API_URL;
 
 const CreateUser = () => {
     const [input,setInput] = useState({})
@@ -21,7 +22,7 @@ const CreateUser = () => {
     const handleSubmit =async(e)=>{
         e.preventDefault()
 
-            let api = "http://localhost:8000/admin/createuser"
+            let api = `${API}/admin/createuser`
             const response = await axios.post(api,input)
              toast.success(response.data.msg) 
             // navigate("/admindashboard")

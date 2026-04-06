@@ -5,6 +5,10 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import "../css/assigntask.css"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+const API = import.meta.env.VITE_API_URL;
+
 const Assigntask = () => {
     const [mydata, setMyData]= useState([])
      const [show, setShow] = useState(false);
@@ -19,7 +23,7 @@ const Assigntask = () => {
   } 
 
     const loadData = async()=>{
-        let api = "http://localhost:8000/admin/getuserdata";
+        let api = `${API}/admin/getuserdata`;
         const response = await axios.get(api)
         setMyData(response.data)
         console.log(response.data)
@@ -32,10 +36,11 @@ const Assigntask = () => {
 
     const handleSubmitTask=async(e)=>{
     e.preventDefault();
-  let api = "http://localhost:8000/admin/assigntask";
+  let api = `${API}/admin/assigntask`;
   const response = await axios.post(api, {userid, usertask, days});
   console.log(response.data);
-  // console.log(response.data.msg)
+  toast.success("your task is sent!")      
+  
 }
 
     let sno=0;
@@ -57,7 +62,8 @@ const Assigntask = () => {
     })
   return (
    <>
-  <Table striped bordered hover variant="dark">
+  
+  <Table striped bordered hover variant="dark" >
       <thead>
         <tr>
           <th>Sno</th>
@@ -71,6 +77,7 @@ const Assigntask = () => {
     {ans}
       </tbody>
     </Table>
+    
 
     <Modal show={show} onHide={handleClose} >
         <Modal.Header closeButton className="dark-modal">
@@ -100,6 +107,7 @@ const Assigntask = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+      <ToastContainer theme='dark'/>
    </>
   )
 }

@@ -6,6 +6,10 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import "../css/assigntask.css"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+const API = import.meta.env.VITE_API_URL;
+
 const UserTask = () => {
     const [mydata, setMydata] = useState([]);
     const [show, setShow] = useState(false);
@@ -19,7 +23,7 @@ const UserTask = () => {
           setShow(true);
     } 
     const loadData = async () => {
-        let api = `http://localhost:8000/user/getusertask/?id=${localStorage.getItem("userid")}`;
+        let api = `${API}/user/getusertask/?id=${localStorage.getItem("userid")}`;
         const response = await axios.get(api);
         console.log(response.data);
         setMydata(response.data);
@@ -31,13 +35,10 @@ const UserTask = () => {
 
   const handleSubmitTask=async(e)=>{
        e.preventDefault();
-          let api = "http://localhost:8000/user/settaskstatus";
+          let api = `${API}/user/settaskstatus`;
           const response = await axios.post(api, {taskID, taskStatus, compDay})
          console.log(response.data);    
-         if(response){
-            alert("Ok")
-         }
-         
+        toast.success("your Report is sent!")      
   }
 
 
@@ -107,6 +108,7 @@ const UserTask = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
+            <ToastContainer theme="dark"/>
         </>
     )
 }
