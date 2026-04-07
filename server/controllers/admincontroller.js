@@ -33,6 +33,9 @@ const CreateUser = async (req, res) => {
       secure: true,
     });
 
+    console.log("EMAIL_USER:", process.env.EMAIL_USER);
+console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "SET" : "NOT SET");
+
     const mailDetails = {
       from: process.env.EMAIL_USER,
       to: email,
