@@ -23,15 +23,7 @@ const CreateUser = async (req, res) => {
   const UserPassword = RandomPass.randomPassword();
 
   try {
-    // 1️⃣ First, create user in DB
-    const user = await UserModel.create({
-      name,
-      email,
-      post,
-      password: UserPassword,
-    });
-
-    // 2️⃣ Setup nodemailer
+    // 1️⃣ Create mail transporter first
     const mailTransporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -58,15 +50,29 @@ Regards,
 Team`,
     };
 
-    // 3️⃣ Try sending email
+    // 2️⃣ Try sending email first
+    let emailSent = false;
     try {
       const info = await mailTransporter.sendMail(mailDetails);
       console.log("Email sent successfully:", info.response);
-      // Respond success
-      res.status(200).send({ msg: "User created & Email sent!!" });
+      emailSent = true;
     } catch (emailErr) {
       console.error("Email sending failed:", emailErr);
-      // Respond DB success but email failed
+      emailSent = false;
+    }
+
+    // 3️⃣ Create user in DB regardless of email success
+    const user = await UserModel.create({
+      name,
+      email,
+      post,
+      password: UserPassword,
+    });
+
+    // 4️⃣ Respond to frontend
+    if (emailSent) {
+      res.status(200).send({ msg: "User created & Email sent!!" });
+    } else {
       res.status(200).send({
         msg: "User created, but email could not be sent. Check logs!",
       });
@@ -77,6 +83,7 @@ Team`,
     res.status(500).send({ msg: "Something went wrong while creating user" });
   }
 };
+
 
 const getUserData = async(req,res)=>{
   const User = await UserModel.find()
