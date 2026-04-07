@@ -19,31 +19,25 @@ const userLogin = async (req, res) => {
 };
 
 const CreateUser = async (req, res) => {
-  try{
   const { name, email, post } = req.body;
   const UserPassword = RandomPass.randomPassword();
 
-   const user = await UserModel.create({
-    name: name,
-    email: email,
-    post: post,
-    password: UserPassword,
-  });
+  try {
+    // 1️⃣ Create mail transporter first
+    const mailTransporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS, // app password
+      },
+      secure: true,
+    });
 
-  const mailTransporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-     secure: true, // optional
-  });
-
-  const mailDetails = {
-    from: process.env.EMAIL_USER,
-    to: email,
-    subject: "User Login Details!",
-    text: `Hello ${name},
+    const mailDetails = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "User Login Details!",
+      text: `Hello ${name},
 
 Your account has been created.
 
@@ -54,40 +48,41 @@ Please change your password after login.
 
 Regards,  
 Team`,
-  };
+    };
 
- 
+    // 2️⃣ Try sending email first
+    let emailSent = false;
+    try {
+      const info = await mailTransporter.sendMail(mailDetails);
+      console.log("Email sent successfully:", info.response);
+      emailSent = true;
+    } catch (emailErr) {
+      console.error("Email sending failed:", emailErr);
+      emailSent = false;
+    }
 
-  // mailTransporter.sendMail(
-  //   mailDetails,
+    // 3️⃣ Create user in DB regardless of email success
+    const user = await UserModel.create({
+      name,
+      email,
+      post,
+      password: UserPassword,
+    });
 
-  //   function (err, data) {
-  //     if (err) {
-  //       console.log(err,"gfyftuyjyjrdthdrxt");
-  //     } else {
-  //       console.log("Email sent");
-  //     }
-  //   },
-  // );
-
-  // res.send({ msg: "Email successfully sent!!" });
-
-     // Wait for email to be sent
-   const info = await mailTransporter.sendMail(mailDetails);
-    console.log("Email sent successfully!!!!!", info.response);
-
-    // Only after email is sent, respond to frontend
-    res.status(200).send({ msg: "User created & Email sent!!" });
+    // 4️⃣ Respond to frontend
+    if (emailSent) {
+      res.status(200).send({ msg: "User created & Email sent!!" });
+    } else {
+      res.status(200).send({
+        msg: "User created, but email could not be sent. Check logs!",
+      });
+    }
 
   } catch (err) {
     console.error("CreateUser Error:", err);
-    res.status(500).send({ msg: "Email failed to send or something went wrong" });
+    res.status(500).send({ msg: "Something went wrong while creating user" });
   }
-
- 
-  
 };
-
 
 
 const getUserData = async(req,res)=>{
