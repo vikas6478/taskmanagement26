@@ -19,36 +19,31 @@ const userLogin = async (req, res) => {
 };
 
 const CreateUser = async (req, res) => {
+  
   const { name, email, post } = req.body;
   const UserPassword = RandomPass.randomPassword();
 
-  try {
-    // 1️⃣ First, create user in DB
-    const user = await UserModel.create({
-      name,
-      email,
-      post,
-      password: UserPassword,
-    });
+   const user = await UserModel.create({
+    name: name,
+    email: email,
+    post: post,
+    password: UserPassword,
+  });
 
-    // 2️⃣ Setup nodemailer
-    const mailTransporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS, // app password
-      },
-      secure: true,
-    });
+  const mailTransporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+     secure: true, // optional
+  });
 
-    console.log("EMAIL_USER:", process.env.EMAIL_USER);
-console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "SET" : "NOT SET");
-
-    const mailDetails = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: "User Login Details!",
-      text: `Hello ${name},
+  const mailDetails = {
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: "User Login Details!",
+    text: `Hello ${name},
 
 Your account has been created.
 
@@ -59,26 +54,38 @@ Please change your password after login.
 
 Regards,  
 Team`,
-    };
+  };
 
-    // 3️⃣ Try sending email
-    try {
-      const info = await mailTransporter.sendMail(mailDetails);
-      console.log("Email sent successfully:", info.response);
-      // Respond success
-      res.status(200).send({ msg: "User created & Email sent!!" });
-    } catch (emailErr) {
-      console.error("Email sending failed:", emailErr);
-      // Respond DB success but email failed
-      res.status(200).send({
-        msg: "User created, but email could not be sent. Check logs!",
-      });
-    }
+ 
 
-  } catch (err) {
-    console.error("CreateUser Error:", err);
-    res.status(500).send({ msg: "Something went wrong while creating user" });
-  }
+  mailTransporter.sendMail(
+    mailDetails,
+
+    function (err, data) {
+      if (err) {
+        console.log(err,"gfyftuyjyjrdthdrxt");
+      } else {
+        console.log("Email sent");
+      }
+    },
+  );
+
+  res.send({ msg: "Email successfully sent!!" });
+
+  //    // Wait for email to be sent
+  //  const info = await mailTransporter.sendMail(mailDetails);
+  //   console.log("Email sent successfully!!!!!", info.response);
+
+  //   // Only after email is sent, respond to frontend
+  //   res.status(200).send({ msg: "User created & Email sent!!" });
+
+  // } catch (err) {
+  //   console.error("CreateUser Error:", err);
+  //   res.status(500).send({ msg: "Email failed to send or something went wrong" });
+  // }
+
+ 
+  
 };
 
 const getUserData = async(req,res)=>{
