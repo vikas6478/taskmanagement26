@@ -36,6 +36,7 @@ const CreateUser = async (req, res) => {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },
+     secure: true, // optional
   });
 
   const mailDetails = {
@@ -72,8 +73,8 @@ Team`,
   // res.send({ msg: "Email successfully sent!!" });
 
      // Wait for email to be sent
-    await mailTransporter.sendMail(mailDetails);
-    console.log("Email sent successfully!!!!!");
+   const info = await mailTransporter.sendMail(mailDetails);
+    console.log("Email sent successfully!!!!!", info.response);
 
     // Only after email is sent, respond to frontend
     res.status(200).send({ msg: "User created & Email sent!!" });
