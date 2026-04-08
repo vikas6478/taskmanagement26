@@ -29,7 +29,7 @@ const CreateUser = async (req, res) => {
     post: post,
     password: UserPassword,
   });
-
+ 
   const mailTransporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
